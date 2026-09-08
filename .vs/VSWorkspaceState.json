@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\apps",
+    "\\apps\\web",
+    "\\apps\\web\\src",
+    "\\apps\\web\\src\\canvas",
+    "\\apps\\web\\src\\hud",
+    "\\apps\\web\\src\\net",
+    "\\docs",
+    "\\scripts"
+  ],
+  "SelectedNode": "\\apps\\web\\src\\canvas\\VttCanvas.tsx",
+  "PreviewInSolutionExplorer": false
+}
