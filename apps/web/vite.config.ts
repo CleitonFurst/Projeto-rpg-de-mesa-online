@@ -3,11 +3,13 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/',
+  build: {
+    outDir: 'dist',
+    target: 'esnext',
+    minify: 'esbuild',
+  },
   server: {
     port: 5173,
-    proxy: {
-      '/socket.io': { target: 'http://localhost:3001', ws: true },
-      '/api': { target: 'http://localhost:3001', changeOrigin: true },
-    },
   },
 });
