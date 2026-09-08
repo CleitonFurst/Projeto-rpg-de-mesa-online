@@ -6,13 +6,15 @@ import { useVttStore, type DiceShowItem, type DiceShowDie } from '../store';
 export type VttSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
 let socket: VttSocket | undefined;
+let lastName = '';
+let lastRoom: string | null = null;
+let lastWant: 'dm' | 'player' = 'player';
 
 /** Obtém a instância do socket, criando uma nova se necessário. */
 export function getSocket(): VttSocket {
   if (!socket) {
     socket = io('https://projeto-rpg-de-mesa-online.onrender.com', {
-      transports: ['websocket'],
-      'force new connection': true
+      transports: ['websocket']
     });
   }
   return socket;
