@@ -230,11 +230,14 @@ export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string)
           res?: { ok: boolean; role?: 'dm' | 'player'; playerId?: string; roomId?: string; error?: string },
         ): void => {
           if (err || !res || !res.ok) {
-            useVttStore
-              .getState()
-              .setJoinError(
-                res?.error ?? (err ? 'Tempo esgotado ao entrar na sala' : 'Não foi possível entrar.'),
-              );
+            const errorMsg = res?.error ?? (err ? 'Tempo esgotado ao entrar na sala' : 'Não foi possível entrar.');
+            useVttStore.getState().setJoinError(errorMsg);
+            
+            // Se já existe mestre, limpa estado para permitir criar nova sala
+            if (res?.error && res.error.includes('Mestre')) {
+              useVttStore.getState().setJoined({ id: '', name: '', role: 'player' as const }, undefined);
+            }
+            
             resolve();
             return;
           }
