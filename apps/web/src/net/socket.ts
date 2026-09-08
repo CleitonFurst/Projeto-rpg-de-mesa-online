@@ -5,18 +5,6 @@ import { useVttStore, type DiceShowItem, type DiceShowDie } from '../store';
 /** No cliente: escuta ServerToClientEvents, emite ClientToServerEvents. */
 export type VttSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-let socket: VttSocket | null = null;
-let lastName: string | null = null;
-let lastWant: 'dm' | 'player' = 'player';
-let lastRoom: string | null = null;
-
-export function getSocket(): VttSocket {
-  if (!socket) {
-    socket = io('/', { path: '/socket.io', transports: ['websocket', 'polling'] });
-    registerListeners(socket);
-  }
-  return socket;
-}
 
 function registerListeners(s: VttSocket): void {
   const st = (): ReturnType<typeof useVttStore.getState> => useVttStore.getState();
