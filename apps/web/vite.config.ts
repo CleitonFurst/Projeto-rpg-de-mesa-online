@@ -8,9 +8,6 @@ export default defineConfig({
     outDir: 'dist',
     target: 'esnext',
     minify: 'esbuild',
-    rollupOptions: {
-      external: ['@vtt/shared'],
-    },
   },
   server: {
     port: 5173,
