@@ -1,5 +1,5 @@
 ﻿import { io, type Socket } from 'socket.io-client';
-import type { ClientToServerEvents, RollEntry, ServerToClientEvents } from '@vtt/shared';
+import type { ClientToServerEvents, PlayerInfo, RollEntry, ServerToClientEvents } from '@vtt/shared';
 import { useVttStore, type DiceShowItem, type DiceShowDie } from '../store';
 
 /** No cliente: escuta ServerToClientEvents, emite ClientToServerEvents. */
@@ -227,7 +227,7 @@ export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string)
       new Promise<void>((resolve) => {
         const done = (
           err: unknown,
-          res?: { ok: boolean; role?: 'dm' | 'player'; playerId?: string; roomId?: string; error?: string },
+          res?: { ok: boolean; seat?: { playerId?: string; name?: string; role?: 'dm' | 'player' }; error?: string; roomId?: string },
         ): void => {
           if (err || !res || !res.ok) {
             const errorMsg = res?.error ?? (err ? 'Tempo esgotado ao entrar na sala' : 'Não foi possível entrar.');
@@ -235,8 +235,16 @@ export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string)
             resolve();
             return;
           }
-          const me = { id: res.playerId ?? '', name: name.trim(), role: res.role ?? 'player' } as const;
-          useVttStore.getState().setRoomId(res.roomId ?? lastRoom ?? 'sala-demo');
+          // Servidor retorna { ok: true, seat: { playerId, name, role } }
+          const seat = res.seat ?? {};
+          const me: PlayerInfo = {
+            id: seat.playerId ?? '',
+            name: seat.name ?? name.trim(),
+            role: seat.role ?? want,
+          };
+          const actualRoomId = res.roomId ?? lastRoom ?? 'sala-demo';
+          
+          useVttStore.getState().setRoomId(actualRoomId);
           useVttStore.getState().setJoined(me, useVttStore.getState().snapshot);
           resolve();
         };
