@@ -69,7 +69,7 @@ interface VttState {
   inventoryOpen: boolean;
 
   setJoining(v: boolean): void;
-  setJoined(me: PlayerInfo, snap: RoomSnapshot | null): void;
+  setJoined(me: PlayerInfo, snap: RoomSnapshot | null | undefined): void;
   setJoinError(msg: string | null): void;
   setSnapshot(snap: RoomSnapshot): void;
   patchSnapshot(fn: (s: RoomSnapshot) => RoomSnapshot): void;
