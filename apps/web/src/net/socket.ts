@@ -1,5 +1,5 @@
 ﻿import { io, type Socket } from 'socket.io-client';
-import type { ClientToServerEvents, PlayerInfo, RoomSnapshot, RollEntry, ServerToClientEvents } from '@vtt/shared';
+import type { ClientToServerEvents, PlayerInfo, RollEntry, ServerToClientEvents } from '@vtt/shared';
 import { useVttStore, type DiceShowItem, type DiceShowDie } from '../store';
 
 /** No cliente: escuta ServerToClientEvents, emite ClientToServerEvents. */
@@ -247,7 +247,7 @@ export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string)
           // Define o roomId e marca o usuário como entrado
           // NÃO passamos snapshot aqui - o event 'room:snapshot' irá atualizá-lo depois
           useVttStore.getState().setRoomId(actualRoomId);
-          useVttStore.getState().setJoined(me, null as unknown as RoomSnapshot | null);
+          useVttStore.getState().setJoined(me, null);
           resolve();
         };
         if (lastRoom) s.timeout(8000).emit('room:join', lastRoom, name.trim(), want, done);
