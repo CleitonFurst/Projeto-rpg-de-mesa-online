@@ -13,7 +13,7 @@ export function useMySheets() {
 }
 
 export function PlayerHud() {
-  const sheetsCount = useVttStore((s) => s.snapshot?.sheets.length ?? 0);
+  const sheetsCount = useVttStore((s) => s.snapshot?.sheets?.length ?? 0);
   const me = useVttStore((s) => s.me);
   const setSideTab = useVttStore((s) => s.setSideTab);
   const setCreatorOpen = useVttStore((s) => s.setCreatorOpen);
@@ -105,7 +105,7 @@ export function PlayerHud() {
             </div>
           </div>
         )}
-        {mySheets.length > 1 && <span className="chip">{mySheets.length} personagens</span>}
+        {mySheets?.length > 1 && <span className="chip">{mySheets.length} personagens</span>}
         <div className="hud-quick">
           <span className="chip">
             Espaços: {primary.spellSlots.total - primary.spellSlots.used}/{primary.spellSlots.total}
