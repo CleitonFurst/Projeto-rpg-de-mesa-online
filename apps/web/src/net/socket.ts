@@ -212,6 +212,11 @@ export async function createRoom(): Promise<string | null> {
 export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string): Promise<JoinResult> {
   const store = useVttStore.getState();
   store.setJoining(true);
+  // *** LIMPAR TODO ESTADO ANTIGO PARA EVITAR CONFLITOS ***
+  store.setJoined({ id: '', name: '', role: 'player' as const });
+  store.setRoomId(null);
+  store.setJoinError(null);
+  
   // Reset state variables to prevent joining old rooms
   lastName = name.trim();
   lastWant = want;
