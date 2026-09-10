@@ -105,7 +105,7 @@ export function PlayerHud() {
             </div>
           </div>
         )}
-        {mySheets?.length > 1 && <span className="chip">{mySheets.length} personagens</span>}
+        {mySheets?.length > 1 && <span className="chip">{mySheets?.length} personagens</span>}
         <div className="hud-quick">
           <span className="chip">
             Espaços: {primary.spellSlots.total - primary.spellSlots.used}/{primary.spellSlots.total}
