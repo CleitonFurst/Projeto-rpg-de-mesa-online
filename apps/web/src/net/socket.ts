@@ -213,7 +213,7 @@ export function joinRoom(name: string, want: 'dm' | 'player', roomCode?: string)
   const store = useVttStore.getState();
   store.setJoining(true);
   // *** LIMPAR TODO ESTADO ANTIGO PARA EVITAR CONFLITOS ***
-  store.setJoined({ id: '', name: '', role: 'player' as const });
+  store.setJoined({ id: '', name: '', role: 'player' as const }, null);
   store.setRoomId(null);
   store.setJoinError(null);
   
