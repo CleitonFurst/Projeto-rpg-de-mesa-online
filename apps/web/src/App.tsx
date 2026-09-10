@@ -20,6 +20,9 @@ export function App() {
   const toastType = useVttStore((s) => s.toastType);
   const toggleInventoryOpen = useVttStore((s) => s.toggleInventoryOpen);
 
+  // Proteção: só renderiza a se todas as condições críticas estiverem atendidas
+  const isInitialized = joined && me && snapshot;
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT' || (e.target as HTMLElement)?.tagName === 'SELECT') return;
@@ -29,7 +32,8 @@ export function App() {
     return () => window.removeEventListener('keydown', handler);
   }, [toggleInventoryOpen]);
 
-  if (!joined || !snapshot || !me) {
+  // Só renderiza a mesa se todos os estados críticos estiverem definidos
+  if (!isInitialized) {
     return <JoinGate />;
   }
 
