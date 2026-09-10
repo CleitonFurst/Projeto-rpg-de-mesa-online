@@ -122,7 +122,7 @@ export const useVttStore = create<VttState>((set, get) => ({
   inventoryOpen: false,
 
   setJoining: (v) => set({ joining: v }),
-  setJoined: (me, snap) => set({ joined: true, joining: false, me, snapshot: snap ?? {} }),
+  setJoined: (me, snap) => set({ joined: true, joining: false, me, snapshot: (snap ?? {}) as RoomSnapshot }),
   setJoinError: (msg) => set({ joinError: msg, joining: false }),
   setSnapshot: (snap) => set({ snapshot: snap }),
   patchSnapshot: (fn) => set((st) => (st.snapshot ? { snapshot: fn(st.snapshot) } : {})),
